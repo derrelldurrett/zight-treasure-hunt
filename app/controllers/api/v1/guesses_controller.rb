@@ -1,4 +1,4 @@
-class GuessesController < ApplicationController
+class Api::V1::GuessesController < ApplicationController
   before_action :set_guess, only: %i[ show update destroy ]
 
   # GET /guesses

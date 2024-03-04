@@ -1,30 +1,30 @@
 require "rails_helper"
 
-RSpec.describe GuessesController, type: :routing do
+RSpec.describe Api::V1::GuessesController, type: :routing do
   describe "routing" do
     it "routes to #index" do
-      expect(get: "/guesses").to route_to("guesses#index")
+      expect(get: "/api/v1/guesses").to route_to("api/v1/guesses#index", format: :json)
     end
 
     it "routes to #show" do
-      expect(get: "/guesses/1").to route_to("guesses#show", id: "1")
+      expect(get: "/api/v1/guesses/1").to route_to("api/v1/guesses#show", id: "1", format: :json)
     end
 
 
     it "routes to #create" do
-      expect(post: "/guesses").to route_to("guesses#create")
+      expect(post: "/api/v1/guesses").to route_to("api/v1/guesses#create", format: :json)
     end
 
     it "routes to #update via PUT" do
-      expect(put: "/guesses/1").to route_to("guesses#update", id: "1")
+      expect(put: "/api/v1/guesses/1").to route_to("api/v1/guesses#update", id: "1", format: :json)
     end
 
     it "routes to #update via PATCH" do
-      expect(patch: "/guesses/1").to route_to("guesses#update", id: "1")
+      expect(patch: "/api/v1/guesses/1").to route_to("api/v1/guesses#update", id: "1", format: :json)
     end
 
     it "routes to #destroy" do
-      expect(delete: "/guesses/1").to route_to("guesses#destroy", id: "1")
+      expect(delete: "/api/v1/guesses/1").to route_to("api/v1/guesses#destroy", id: "1", format: :json)
     end
   end
 end
