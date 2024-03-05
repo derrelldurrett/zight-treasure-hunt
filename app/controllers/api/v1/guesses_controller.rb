@@ -19,6 +19,7 @@ class Api::V1::GuessesController < ApplicationController
     @guess = Guess.new(guess_params)
 
     if @guess.save
+      # If guess is within 1000m, mark user a winner
       render json: @guess, status: :created, location: @guess
     else
       render json: @guess.errors, status: :unprocessable_entity
