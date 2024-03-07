@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <style>
+      /* Email styles need to be inline */
+  </style>
+</head>
+
+<body>
+<h2>Howdy, winner!</h2>
+<p>
+  Your guess of latitude: <%= @latitude %>, longitude: <%= @longitude %> was a winner! It was <%= @distance %>m from the treasure!
+</p>
+<p>
+  Your account is now retired, as is traditional with winners. See the results <a href="<% ENV['WINNERS_LIST_HOST'] %>/winners">here</a>.
+</p>
+<p>Thanks for playing!</p>
+</body>
+</html>

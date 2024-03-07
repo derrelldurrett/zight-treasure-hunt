@@ -2,11 +2,12 @@ class Api::V1::GuessesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_guess, only: %i[ show update destroy ]
 
-  # GET /guesses
-  def index
-    @guesses = Guess.all
-
-    render json: @guesses
+  # GET /guesses/winners
+  def winners
+    winners = User.where(winner: true).order(distance: :asc).map do|user|
+      { user: user.obfuscated_email, distance: user.distance }
+    end
+    render json: winners, status: :ok
   end
 
   # GET /guesses/1
@@ -17,10 +18,8 @@ class Api::V1::GuessesController < ApplicationController
   # POST /guesses
   def create
     @guess = Guess.new(guess_params)
-
-    if @guess.save
-      # If guess is within 1000m, mark user a winner
-      render json: @guess, status: :created, location: @guess
+    if not current_user.winner? and @guess.evaluate?(current_user)
+      render json: { guess: @guess, winner: @guess.user.winner? }, status: :created
     else
       render json: @guess.errors, status: :unprocessable_entity
     end
@@ -28,7 +27,7 @@ class Api::V1::GuessesController < ApplicationController
 
   # PATCH/PUT /guesses/1
   def update
-    if @guess.update(guess_params)
+    if not current_user.winner? and @guess.update(guess_params)
       render json: @guess
     else
       render json: @guess.errors, status: :unprocessable_entity
@@ -37,7 +36,7 @@ class Api::V1::GuessesController < ApplicationController
 
   # DELETE /guesses/1
   def destroy
-    @guess.destroy
+    @guess.destroy unless current_user.winner?
   end
 
   private
